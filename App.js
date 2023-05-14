@@ -11,6 +11,7 @@ import EditProfile from './screen/editProfile';
 import ViewOrder from './screen/viewOrder';
 import reviewDetails from './screen/reviewDetails';
 import ExpenseReport from './screen/expenseReport';
+import Login from './screen/Login'
 
 const Drawer = createDrawerNavigator();
 
@@ -21,7 +22,14 @@ function App() {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName="Home">
+          <Drawer.Navigator screenOptions={{
+              drawerStyle: { backgroundColor: '#c4b5fd' },
+              drawerPosition: 'left',
+              headerStyle: {backgroundColor: '#d9b3ff'},
+              headerShown: false,
+              fontWeight: 'bold'
+              }} initialRouteName="login">
+          <Drawer.Screen name="login" component={Login} />
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Edit Profile" component={EditProfile} />
             <Drawer.Screen
