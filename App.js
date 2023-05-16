@@ -15,9 +15,9 @@ import Login from './screen/Login'
 import tw from 'tailwind-react-native-classnames';
 
 const Drawer = createDrawerNavigator();
-
+global.id='';
 function App() {
-  const [id, setId] = useState('6');
+  
 
   return (
     <SafeAreaProvider>

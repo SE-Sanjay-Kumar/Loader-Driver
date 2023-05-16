@@ -9,7 +9,7 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 
 export default function Home({ navigation }) {
   const [driver, setDriver] = React.useState([]);
-  const [id, setDriverId] = React.useState('6');
+  const [id, setDriverId] = React.useState(global.id);
   
   React.useEffect(() => {
     getdriver();

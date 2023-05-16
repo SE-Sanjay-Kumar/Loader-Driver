@@ -1,21 +1,81 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TextInput } from 'react-native';
 import { Avatar, Button } from 'react-native-paper';
-import { getDriver } from '../src/services/driver_service';
+import { getDriver, login } from '../src/services/driver_service';
 import { Route } from 'react-router-dom';
 import tw from 'tailwind-react-native-classnames';
 import { Formik } from 'formik';
 import * as yup from 'yup'
 import HideKeyboard from '../components/HideKeyboard';
 import { responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
+import Snackbar from "react-native-snackbar"
+
 
 
 export default function Home({ navigation }) {
   const [userName, setuserName] = React.useState("");
 
-  const gotoHome =()=>{
-    navigation.navigate('Home')
+  const loginfunc = (FormData)=>{
+    login(FormData).then((response)=>{
+        Snackbar.show({
+          text: "Successfully Logged In",
+          duration: Snackbar.LENGTH_SHORT,
+          action: {
+            text: 'close',
+            textColor: 'green',
+            onPress: () => { /* Do something. */ },
+          },
+        });
+
+        global.id=response.data.id;
+        console.log(response.data.id);
+        navigation.navigate('Home',{
+          id: response.data.id,
+        });
+      })
+    .catch((err) => {
+        if (err.response) {
+          console.log(err.response);
+          Snackbar.show({
+            text: 'Incorrect Password or Email!',
+            duration: Snackbar.LENGTH_SHORT,
+            action: {
+              text: 'close',
+              textColor: 'green',
+              onPress: () => { /* Do something. */ },
+            },
+          });
+          console.log("Error Response"+err.response.data.msg);
+        } else if (err.request) {
+          Snackbar.show({
+            text: 'Incorrect Password or Email!Else IF ',
+            duration: Snackbar.LENGTH_SHORT,
+            action: {
+              text: 'close',
+              textColor: 'green',
+              onPress: () => { /* Do something. */ },
+            },
+          });
+          console.log("Error Request");
+          console.log(err.request);
+        } else {
+          Snackbar.show({
+            text: 'Incorrect Password or Email! Else',
+            duration: Snackbar.LENGTH_SHORT,
+            action: {
+              text: 'close',
+              textColor: 'green',
+              onPress: () => { /* Do something. */ },
+            },
+          });
+            console.log("Error Else");
+          console.log(err.message);
+        }
+      });
+    
   }
+
+
   return (
     <HideKeyboard>
       <View style={[tw``,{backgroundColor: '#FFFFFF'}]}>
@@ -28,30 +88,7 @@ export default function Home({ navigation }) {
                 style={tw`text-white`}
                 validationSchema={loginValidationSchema}
                 initialValues={{ username: '', password: '' }}
-                onSubmit={(values, actions) => {
-                  if (values.username === 'tms' && values.password === "loaderpass") {
-                    actions.resetForm();
-                    Snackbar.show({
-                      text: 'Logged in sucesfully',
-                      duration: Snackbar.LENGTH_SHORT,
-                      action: {
-                        text: 'close',
-                        textColor: 'green',
-                        onPress: () => { /* Do something. */ },
-                      },
-                    });
-                  } else {
-                    Snackbar.show({
-                      text: 'Invalid username or password',
-                      duration: Snackbar.LENGTH_SHORT,
-                      action: {
-                        text: 'close',
-                        textColor: '#7676a7',
-                        onPress: () => { /* Do something. */ },
-                      },
-                    });
-                  }
-                }}>
+                >
                 {
                   (
                     {
@@ -67,7 +104,6 @@ export default function Home({ navigation }) {
                         placeholder='Username'
                         placeholderTextColor={'black'}
                         onChangeText={handleChange('username')}
-                        value={values.username}
                         underlineColor='transparent'
                         outlineColor= 'white'
                         style={[tw`m-5 rounded-2xl rounded-t-2xl text-center bg-white`,{}]}
@@ -81,7 +117,6 @@ export default function Home({ navigation }) {
                         secureTextEntry={true}
                         underlineColor='white'
                         onChangeText={handleChange('password')}
-                        value={values.password}
                         style={tw`mx-5 rounded-2xl rounded-t-2xl text-center bg-white `}
                       />
                       {errors.password &&
@@ -89,7 +124,7 @@ export default function Home({ navigation }) {
                       }
                       <View >
                         <Button  style={[tw`mt-10 mx-10 text-black bg-pink-700`,{}]} mode='contained'
-                          onPress={gotoHome}
+                          onPress={()=>{loginfunc(values)}}
                           disabled={!isValid}
                         ><Text style={tw`font-bold`}>Log In</Text></Button>
                         
