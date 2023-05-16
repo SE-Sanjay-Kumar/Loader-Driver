@@ -65,29 +65,30 @@ export default function Home({ navigation }) {
                     <View>
                       <TextInput
                         placeholder='Username'
+                        placeholderTextColor={'black'}
                         onChangeText={handleChange('username')}
                         value={values.username}
                         underlineColor='transparent'
-                        borderColor= 'white'
-                        style={[tw`m-5 rounded-2xl rounded-t-2xl text-center text-white`,{}]}
+                        outlineColor= 'white'
+                        style={[tw`m-5 rounded-2xl rounded-t-2xl text-center bg-white`,{}]}
                       />
                       {errors.username &&
                         <Text style={Styles.error}>{errors.username}</Text>
                       }
                       <TextInput
                         placeholder='Password'
+                        placeholderTextColor={'black'}
                         secureTextEntry={true}
                         underlineColor='white'
                         onChangeText={handleChange('password')}
                         value={values.password}
-                        borderColor = 'white'
-                        style={tw`mx-5 rounded-2xl rounded-t-2xl text-center text-white `}
+                        style={tw`mx-5 rounded-2xl rounded-t-2xl text-center bg-white `}
                       />
                       {errors.password &&
                         <Text style={Styles.error}>{errors.password}</Text>
                       }
                       <View >
-                        <Button  style={[tw`mt-5 mx-10 text-black`,{backgroundColor: "#c23476"}]} mode='contained'
+                        <Button  style={[tw`mt-10 mx-10 text-black bg-pink-700`,{}]} mode='contained'
                           onPress={gotoHome}
                           disabled={!isValid}
                         ><Text style={tw`font-bold`}>Log In</Text></Button>
