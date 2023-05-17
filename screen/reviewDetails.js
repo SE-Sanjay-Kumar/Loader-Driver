@@ -20,7 +20,16 @@ export default Orders = ({navigation}) =>{
     React.useEffect(() => {
         handleViewPickUp();
     }, []);
-
+    const ConfirmOrder=()=>{
+        navigation.navigate('Review',{order:order});
+        // updateOrderStatus(order).then(response => {
+        //     console.log('Order Confirmed');
+        //   })
+        //   .catch(error => {
+        //     // Handle error if needed
+        //     console.error('Error sending location update:', error);
+        //   });;
+    }
     const handleViewPickUp = () => {
         let arr=order.pickUp.split(',');
         setLatitude(parseFloat(arr[0]));
@@ -97,7 +106,7 @@ export default Orders = ({navigation}) =>{
                 </TextInput>
                 {order.status.status=="active" ? (
                     <Button style={tw`bg-pink-700 mt-10 mx-20`} mode="contained" onPress={()=>{
-                        updateOrderStatus(order);
+                        ConfirmOrder();
                         Snackbar.show({
                             text: 'Delivery Complete',
                             duration: Snackbar.LENGTH_SHORT,

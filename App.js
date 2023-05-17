@@ -13,6 +13,7 @@ import reviewDetails from './screen/reviewDetails';
 import ExpenseReport from './screen/expenseReport';
 import Login from './screen/Login'
 import tw from 'tailwind-react-native-classnames';
+import Review from './screen/Review';
 
 
 const Drawer = createDrawerNavigator();
@@ -64,6 +65,13 @@ function App() {
             <Drawer.Screen
               name="Review Details"
               component={reviewDetails}
+              options={{
+                drawerItemStyle: { height: 0 }
+                }}
+            />
+            <Drawer.Screen
+              name="Review"
+              component={Review}
               options={{
                 drawerItemStyle: { height: 0 }
                 }}

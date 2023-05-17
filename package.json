@@ -29,6 +29,7 @@
     "react-native-screens": "^3.20.0",
     "react-native-snackbar": "^2.6.2",
     "tailwind-react-native-classnames": "^1.5.1",
+    "twrnc": "^3.6.0",
     "yup": "^1.1.1"
   },
   "devDependencies": {
