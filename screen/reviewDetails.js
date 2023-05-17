@@ -92,8 +92,8 @@ export default Orders = ({navigation}) =>{
                 <Text style={tw`text-center text-lg font-semibold text-white mb-5 mt-5`}>Delivery Date:</Text>
                 <TextInput style={tw`bg-white text-center mx-10 rounded-3xl`} underlineColor="transparent" disabled= 'true' >
                     {order.status.status!="active" ? (<Text style={tw`text-black `}>Pending</Text>):null}
-                    {order.status.status=="active" ? (<Text style={tw`text-black `}>Order Delivered</Text>):null}
-                    {order.status.status=="active" ? (<Text style={tw`text-black `}>{(order.estimatedArrivalOfGoods)}</Text>):null}
+                    {order.status.status=="delivered" ? (<Text style={tw`text-black `}>Order Delivered</Text>):null}
+                    {order.status.status=="active" ? (<Text style={tw`text-black `}>{new Date(order.estimatedArrivalOfGoods).toLocaleDateString()}</Text>):null}
                 </TextInput>
                 {order.status.status=="active" ? (
                     <Button style={tw`bg-pink-700 mt-10 mx-20`} mode="contained" onPress={()=>{

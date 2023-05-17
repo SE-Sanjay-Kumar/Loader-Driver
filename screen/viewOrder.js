@@ -3,23 +3,72 @@ import * as React from 'react';
 import { ScrollView, StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { DataTable,Button } from 'react-native-paper';
-import { getClient, getOrders } from '../src/services/driver_service';
+import { getClient, getDriver, getOrders } from '../src/services/driver_service';
 import tw from 'tailwind-react-native-classnames';
+import Geolocation from 'react-native-geolocation-service'; // Assuming you're using react-native-geolocation-service
+import { updateDriver } from '../src/services/driver_service';
 
 const ViewOrder = ({navigation}) => {
   const [orders, setOrders] = React.useState([]);
   const route=useRoute();
   const [driverId, setDriverId] = React.useState(route.params.id);
+  const [driver, setDriver] = React.useState(route.params.id);
   //you need to configure driver in such a way that the orders should be displayed only of relevant drivers
   React.useEffect(() => {
     allorders();
   }, [driverId]);
   
+  const getCurrentLocation = () => {
+      
+    Geolocation.getCurrentPosition(
+      position => {
+        const { latitude, longitude } = position.coords;
+        console.log("Kaisy Ho:"+longitude)
+
+        sendLocationUpdate(latitude, longitude); // Send location update to the server
+      },
+      error => {
+        // Handle location retrieval error if needed
+        console.error('Error getting current location:', error);
+      },
+      {
+        enableHighAccuracy: true, timeout: 15000, maximumAge: 10000, provider: Geolocation.PROVIDER_GPS
+      }
+    );
+  };
+
+  // Schedule periodic location updates using a timer
+  const locationUpdateTimer = setInterval(() => {
+    getCurrentLocation();
+  }, 300000); // Update location every 5 minutes (adjust the interval as needed)
+  
+  const sendLocationUpdate = (latitude, longitude) => {
+    driver.location=latitude+','+longitude;
+    updateDriver(driver).then(response => {
+          // Handle success response if needed
+          console.log('Location update sent successfully');
+        })
+        .catch(error => {
+          // Handle error if needed
+          console.error('Error sending location update:', error);
+        });
+    };
+
+  React.useEffect(() => {
+    getDriver(route.params.id).then((response)=>{
+      setDriver(response.data);
+
+    }).catch(error=>{
+      console.log("first"+error);
+    })
+      }, []);
+
+
+
+
   const allorders = () => {
-    //update order status here as the driver has 
     getOrders().then((response) => {
       setOrders(response.data);
-      // console.log(driverId);
       
     }).catch((err) => {
       if(err.response){

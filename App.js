@@ -14,11 +14,13 @@ import ExpenseReport from './screen/expenseReport';
 import Login from './screen/Login'
 import tw from 'tailwind-react-native-classnames';
 
+
 const Drawer = createDrawerNavigator();
 global.id='';
 function App() {
   
 
+    
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>

@@ -110,14 +110,14 @@ export const getOrderById=async (id)=>{
 export const login=async (userDetail)=>{
     const userDetailsString = JSON.stringify(userDetail);
     const userDetails = JSON.parse(userDetailsString);
-    const data={
-        "userName": "d",
-        "password":"kjjjkjk",
-    };
     // const data={
-    //     "userName": userDetails.username,
-    //     "password":userDetails.password,
+    //     "userName": "d",
+    //     "password":"kjjjkjk",
     // };
+    const data={
+        "userName": userDetails.username,
+        "password":userDetails.password,
+    };
     console.log(data);
     const response = await myAxios.post('api/driver/login',data);
     return response;
@@ -173,6 +173,7 @@ export const confirmDelivery=async (id)=>{
 }
 
 export const updateDriver=async (driver)=>{
+    
     data={
             "id": driver.id,
             "userName": driver.userName,
@@ -209,8 +210,9 @@ export const updateDriver=async (driver)=>{
                 "statusId": driver.status.statusId,
                 "status": driver.status.status
          
+            },
+            "location": driver.location
         }
-    }
     const response=myAxios.put(`api/driver/${driver.id}`,data);
     return response;
 }
