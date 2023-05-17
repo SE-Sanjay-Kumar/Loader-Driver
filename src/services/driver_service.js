@@ -122,6 +122,7 @@ export const login=async (userDetail)=>{
 }
 
 export const addReview=async (data)=>{
+    const date=new Date()
     const Data={
         "rating": data.rating,
         "comment": data.comment,

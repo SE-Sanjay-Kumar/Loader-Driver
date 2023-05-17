@@ -23,13 +23,13 @@ export default Orders = ({navigation}) =>{
     }, []);
     const ConfirmOrder=()=>{
         navigation.navigate('Review',{order:order});
-        // updateOrderStatus(order).then(response => {
-        //     console.log('Order Confirmed');
-        //   })
-        //   .catch(error => {
-        //     // Handle error if needed
-        //     console.error('Error sending location update:', error);
-        //   });;
+        updateOrderStatus(order).then(response => {
+            console.log('Order Confirmed');
+          })
+          .catch(error => {
+            // Handle error if needed
+            console.error('Error sending location update:', error);
+          });;
     }
     const handleViewPickUp = () => {
         let arr=order.pickUp.split(',');
@@ -102,7 +102,7 @@ export default Orders = ({navigation}) =>{
                 
                 <Text style={tw`text-center text-lg font-semibold text-white mb-2 mt-2`}>Delivery Date</Text>
                 <TextInput style={tw`bg-white text-center mx-10 rounded-3xl`} underlineColor="transparent" disabled= 'true' >
-                    {order.status.status!="active" ? (<Text style={tw`text-black `}>Pending</Text>):null}
+                    {order.status.status!="pending" ? (<Text style={tw`text-black `}>Pending</Text>):null}
                     {order.status.status=="delivered" ? (<Text style={tw`text-black `}>Order Delivered</Text>):null}
                     {order.status.status=="active" ? (<Text style={tw`text-black `}>{new Date(order.estimatedArrivalOfGoods).toLocaleDateString()}</Text>):null}
                 </TextInput>

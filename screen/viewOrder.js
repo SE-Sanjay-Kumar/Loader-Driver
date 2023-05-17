@@ -7,7 +7,7 @@ import { getClient, getDriver, getOrders } from '../src/services/driver_service'
 import tw from 'tailwind-react-native-classnames';
 import Geolocation from 'react-native-geolocation-service'; // Assuming you're using react-native-geolocation-service
 import { updateDriver } from '../src/services/driver_service';
-
+import { requestLocationPermission } from '../src/services/location_service';
 
 const ViewOrder = ({navigation}) => {
   const [orders, setOrders] = React.useState([]);
@@ -31,7 +31,7 @@ const ViewOrder = ({navigation}) => {
     }, []);
 
   const getCurrentLocation = () => {
-      
+    requestLocationPermission();
     Geolocation.getCurrentPosition(
       position => {
         const { latitude, longitude } = position.coords;
