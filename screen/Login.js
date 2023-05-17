@@ -27,8 +27,6 @@ export default function Home({ navigation }) {
           },
         });
 
-        global.id=response.data.id;
-        console.log(response.data.id);
         navigation.navigate('Home',{
           id: response.data.id,
         });

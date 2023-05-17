@@ -5,21 +5,25 @@ import { getDriver } from '../src/services/driver_service';
 import { Route } from 'react-router-dom';
 import tw from 'tailwind-react-native-classnames';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import { NavigationContainer, useRoute } from '@react-navigation/native';
 
 
 export default function Home({ navigation }) {
   const [driver, setDriver] = React.useState([]);
-  const [id, setDriverId] = React.useState(global.id);
-  
+  const route=useRoute();
+  const [id, setDriverId] = React.useState(route.params.id);
+  global.id=id;
   React.useEffect(() => {
     getdriver();
   }, []);
-
+  
   const getdriver = () => {
     getDriver(id)
       .then((response) => {
         //console.log(response.data);
         setDriver(response.data);
+        global.vid=response.data.vehicle.vehicleId; 
+        global.id=response.data.id
       })
       .catch((err) => {
         if (err.response) {
@@ -34,6 +38,7 @@ export default function Home({ navigation }) {
         }
       });
   };
+  
 
   return (
     <View style={[tw`h-full bg-gray-400`,{ }]}>

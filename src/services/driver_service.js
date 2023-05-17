@@ -89,7 +89,6 @@ export const updateOrderStatus=async (Data)=> {
          "schedule": Data.schedule||null
      }
  
-     console.log("Value Of Data: "+JSON.stringify(data)+"Ends Here")
      const response=myAxios.put(`api/orders/${Data.orderId}`,data);
      return response;
  }
@@ -118,13 +117,11 @@ export const login=async (userDetail)=>{
         "userName": userDetails.username,
         "password":userDetails.password,
     };
-    console.log(data);
     const response = await myAxios.post('api/driver/login',data);
     return response;
 }
 
 export const addReview=async (data)=>{
-    console.log(data);
     const Data={
         "rating": data.rating,
         "comment": data.comment,
@@ -221,15 +218,14 @@ export const addReview=async (data)=>{
             "salary": 6000,
             "foodCost": 500,
         }};
-    console.log("Here is the Data"+JSON.stringify(Data))
     const response=myAxios.post(`api/review/order/${data.orderId}/driver-review`,Data);
+    
     return response
 }
 
 
 
 export const confirmDelivery=async (id)=>{
-    console.log("from confirm Delivery"+id);
     const response = await myAxios.put(`api/orders/${id}`,{
         "status": {
                  "statusId": 4,
@@ -274,12 +270,32 @@ export const confirmDelivery=async (id)=>{
         }
          }    
     );
-    console.log(response.status);
     return response;
 }
 
-export const updateDriver=async (driver)=>{
+
+export const getVehicle=async (id)=>{
+    const response=await myAxios.get(`api/vehicle/${id}`);
+    return response;
+}
+export const updateVehicle=async (data)=>{
     
+    Data={
+        "maintenanceCost": data.maintenanceCost,
+        "fuelCost": data.fuelCost,
+        "status": {
+                "statusId": data.status.statusId,
+                "status": data.status.status
+            },
+        }
+    console.log("Vehicle Data"+JSON.stringify(global.vid));
+    const response=await myAxios.put(`api/vehicle/${global.vid}`,Data);
+    console.log()
+    return response;
+}
+
+
+export const updateDriver=async (driver)=>{
     data={
             "id": driver.id,
             "userName": driver.userName,
@@ -289,9 +305,9 @@ export const updateDriver=async (driver)=>{
             "licenseNumber": driver.licenseNumber,
             "yearsOfExperience": parseInt(driver.yearsOfExperience),
             "salary": parseInt(driver.salary),
-            "foodCost": parseInt(driver.foodCost),
+            "foodCost": driver.foodCost,
             "vehicle": {
-                "vehicleId": driver.vehicle.vehicleId,
+                "vehicleId": global.vid,
                 "name": "giant container",
                 "maxWeightCarry": 454,
                 "minWeightCarry": null,

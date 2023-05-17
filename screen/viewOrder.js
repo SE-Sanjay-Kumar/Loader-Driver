@@ -24,9 +24,10 @@ const ViewOrder = ({navigation}) => {
     
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
+        
         setTimeout(() => {
         setRefreshing(false);
-        }, 2000);
+        }, 60000);
     }, []);
 
   const getCurrentLocation = () => {
@@ -51,7 +52,7 @@ const ViewOrder = ({navigation}) => {
   // Schedule periodic location updates using a timer
   const locationUpdateTimer = setInterval(() => {
     getCurrentLocation();
-  }, 8000); // Update location every 8 sec (adjust the interval as needed)
+  }, 60000); // Update location every 8 sec (adjust the interval as needed)
   
   const sendLocationUpdate = (latitude, longitude) => {
     driver.location=latitude+','+longitude;
