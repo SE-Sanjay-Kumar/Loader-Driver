@@ -1,12 +1,13 @@
 
 import * as React from 'react';
-import { ScrollView, StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, TouchableOpacity, Image, RefreshControl } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { DataTable,Button } from 'react-native-paper';
 import { getClient, getDriver, getOrders } from '../src/services/driver_service';
 import tw from 'tailwind-react-native-classnames';
 import Geolocation from 'react-native-geolocation-service'; // Assuming you're using react-native-geolocation-service
 import { updateDriver } from '../src/services/driver_service';
+
 
 const ViewOrder = ({navigation}) => {
   const [orders, setOrders] = React.useState([]);
@@ -50,7 +51,7 @@ const ViewOrder = ({navigation}) => {
   // Schedule periodic location updates using a timer
   const locationUpdateTimer = setInterval(() => {
     getCurrentLocation();
-  }, 300000); // Update location every 5 minutes (adjust the interval as needed)
+  }, 8000); // Update location every 8 sec (adjust the interval as needed)
   
   const sendLocationUpdate = (latitude, longitude) => {
     driver.location=latitude+','+longitude;

@@ -128,7 +128,7 @@ export const addReview=async (data)=>{
     const Data={
         "rating": data.rating,
         "comment": data.comment,
-        "reviewDate": null,
+        "reviewDate": date,
         "order": {
             "orderId": data.orderId,
             "orderName": null,
@@ -209,8 +209,18 @@ export const addReview=async (data)=>{
             "phoneNumber": "03043737019",
             "cnic": 4510287726477,
             "companyName": "Jil"
-        }
-    };
+        },
+        "driver": {
+            "id": data.driver.id,
+            "userName": "driver_1",
+            "password": "driver1pass",
+            "phoneNumber": "034393443443",
+            "cnic": 441098565045,
+            "licenseNumber": "441098565645-455",
+            "yearsOfExperience": 6,
+            "salary": 6000,
+            "foodCost": 500,
+        }};
     console.log("Here is the Data"+JSON.stringify(Data))
     const response=myAxios.post(`api/review/order/${data.orderId}/driver-review`,Data);
     return response

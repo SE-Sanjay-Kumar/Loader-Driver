@@ -106,7 +106,7 @@ export default function Home({ navigation }) {
                         onChangeText={handleChange('username')}
                         underlineColor='transparent'
                         outlineColor= 'white'
-                        style={[tw`m-5 rounded-2xl rounded-t-2xl text-center bg-white`,{}]}
+                        style={[tw`m-5 rounded-2xl rounded-t-2xl text-center text-black bg-white`,{}]}
                       />
                       {errors.username &&
                         <Text style={Styles.error}>{errors.username}</Text>
@@ -117,7 +117,7 @@ export default function Home({ navigation }) {
                         secureTextEntry={true}
                         underlineColor='white'
                         onChangeText={handleChange('password')}
-                        style={tw`mx-5 rounded-2xl rounded-t-2xl text-center bg-white `}
+                        style={tw`mx-5 rounded-2xl rounded-t-2xl text-center text-black bg-white `}
                       />
                       {errors.password &&
                         <Text style={Styles.error}>{errors.password}</Text>
@@ -126,7 +126,7 @@ export default function Home({ navigation }) {
                         <Button  style={[tw`mt-10 mx-10 text-black bg-pink-700`,{}]} mode='contained'
                           onPress={()=>{loginfunc(values)}}
                           disabled={!isValid}
-                        ><Text style={tw`font-bold`}>Log In</Text></Button>
+                        ><Text style={tw`font-bold text-white`}>Log In</Text></Button>
                         
                       
                       </View>

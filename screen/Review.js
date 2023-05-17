@@ -2,7 +2,7 @@ import React from "react";
 import {View, StyleSheet} from 'react-native'
 import { TextInput, Button, Text} from 'react-native-paper';
 import Snackbar from "react-native-snackbar";
-import tailwind from "twrnc";
+import tw from 'tailwind-react-native-classnames';
 import { useRoute } from "@react-navigation/native";
 import { getReview, addReview } from "../src/services/driver_service";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -35,7 +35,7 @@ export default Review = ({navigation}) =>{
             })
             .catch((err)=>{
                 Snackbar.show({
-                    text: "Submitted the Review.",
+                    text: "Already Reviewed.",
                     duration: Snackbar.LENGTH_SHORT,
                     action: {
                       text: 'close',
@@ -70,28 +70,31 @@ export default Review = ({navigation}) =>{
         else {
             console.log(err);
         }
+        navigation.navigate('View Orders',{
+            id: order.driver.id,
+          })
     })    
     console.log(rating);
     }
     return(
-        <View style={tailwind`bg-pink-200 h-full`}>
-            <Text style={tailwind`text-center text-2xl font-mono font-extrabold text-sky-900 underline pb-0 my-5 `}>Driver Review</Text>
+        <View style={tw`bg-gray-400 h-full`}>
+            <Text style={tw`text-center text-2xl font-mono font-extrabold text-white underline pb-0 my-5 `}>Driver Review</Text>
             <TextInput
-                    style={tailwind`my-5 mx-10 mb-0 rounded-b-2xl rounded-t-2xl text-center`}
+                    style={tw`my-5 mx-10 mb-0 rounded-b-2xl rounded-t-2xl text-center bg-white`}
                     underlineColor="transparent"
                     placeholder=''
                     value={order.orderId.toString()}
                     label='Enter Order ID'
             />
             <TextInput
-                    style={tailwind`my-5 mx-10 mb-0 rounded-b-2xl rounded-t-2xl text-center h-50`}
+                    style={tw`my-5 mx-10 mb-0 rounded-b-2xl rounded-t-2xl text-center h-20 bg-white`}
                     underlineColor="transparent"
                     placeholder=''
                     label='Add Review'
                     onChangeText={value=>setComment(value)}
             />
 
-            <View style= {[tailwind`flex-row mt-5 ml-20`,{width: responsiveWidth(100)}]}>
+            <View style= {[tw`flex-row mt-5 ml-20`,{width: responsiveWidth(100)}]}>
                 {stars.map((star) => (
                     <TouchableOpacity key={star} onPress={() => setRating(star)}>
                     <View style={styles.star}>
@@ -101,7 +104,7 @@ export default Review = ({navigation}) =>{
                 ))}
             </View>
             {
-                check==true?(<Button style={tailwind` my-5 mx-15 bg-amber-400 text-black`} mode="contained" onPress={()=>{PostReview()}}>Submit</Button>):null
+                check==true?(<Button style={tw` my-5 mx-20 bg-pink-700 text-white`} mode="contained" onPress={()=>{PostReview()}}>Submit</Button>):null
             }
             
             

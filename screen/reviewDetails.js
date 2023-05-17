@@ -9,6 +9,7 @@ import Snackbar from "react-native-snackbar";
 import MapView, { Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { requestLocationPermission } from '../src/services/location_service';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
 
@@ -63,7 +64,8 @@ export default Orders = ({navigation}) =>{
       };
     
     return(
-        <View style={tw`bg-gray-400`}>
+        <SafeAreaView>
+            <View style={tw`bg-gray-400`}>
             <View style={tw`h-1/2`}>
             <MapView
                 style={styles.map}
@@ -98,14 +100,14 @@ export default Orders = ({navigation}) =>{
                         label={order.orderId}
                 /> */}
                 
-                <Text style={tw`text-center text-lg font-semibold text-white mb-5 mt-5`}>Delivery Date:</Text>
+                <Text style={tw`text-center text-lg font-semibold text-white mb-2 mt-2`}>Delivery Date</Text>
                 <TextInput style={tw`bg-white text-center mx-10 rounded-3xl`} underlineColor="transparent" disabled= 'true' >
                     {order.status.status!="active" ? (<Text style={tw`text-black `}>Pending</Text>):null}
                     {order.status.status=="delivered" ? (<Text style={tw`text-black `}>Order Delivered</Text>):null}
                     {order.status.status=="active" ? (<Text style={tw`text-black `}>{new Date(order.estimatedArrivalOfGoods).toLocaleDateString()}</Text>):null}
                 </TextInput>
                 {order.status.status=="active" ? (
-                    <Button style={tw`bg-pink-700 mt-10 mx-20`} mode="contained" onPress={()=>{
+                    <Button style={tw`bg-pink-700 mt-5 mx-20`} mode="contained" onPress={()=>{
                         ConfirmOrder();
                         Snackbar.show({
                             text: 'Delivery Complete',
@@ -120,10 +122,10 @@ export default Orders = ({navigation}) =>{
                         Confrim Delivery
                     </Button>
 
-                    ) : <Text style={tw`text-center text-lg font-bold text-white mb-5 mt-5`}>Order Status: {order.status.status}</Text>}
-                <View>
+                    ) : <Text style={tw`text-center text-lg font-bold text-white my-2`}>Order Status: {order.status.status}</Text>}
+                
 
-                    <Button style={tw`bg-pink-700 mt-10 mx-20`} mode="contained" onPress={()=>{
+                    <Button style={tw`bg-pink-700 mt-5 mx-20`} mode="contained" onPress={()=>{
                             handleViewPickUp();
                             Snackbar.show({
                                 text: 'Showing Pick Up Location',
@@ -137,7 +139,7 @@ export default Orders = ({navigation}) =>{
                         }}>
                             View Pick Up
                     </Button>
-                    <Button style={tw`bg-pink-700 mt-10 mx-20`} mode="contained" onPress={()=>{
+                    <Button style={tw`bg-pink-700 my-5 mx-20`} mode="contained" onPress={()=>{
                             handleViewDropOff();
                             Snackbar.show({
                                 text: 'Showing Drop Off Location',
@@ -151,12 +153,11 @@ export default Orders = ({navigation}) =>{
                         }}>
                             View Drop Off
                     </Button>
-                </View>
-
-                </View>
+                
+            </View>
             
-
         </View>
+        </SafeAreaView>
     )
 }
 
