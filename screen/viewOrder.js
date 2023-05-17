@@ -18,6 +18,16 @@ const ViewOrder = ({navigation}) => {
     allorders();
   }, [driverId]);
   
+  const [refreshing, setRefreshing] = React.useState(false);
+
+    
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+        setRefreshing(false);
+        }, 2000);
+    }, []);
+
   const getCurrentLocation = () => {
       
     Geolocation.getCurrentPosition(
@@ -84,7 +94,9 @@ const ViewOrder = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={[tw`h-full bg-gray-400 pt-5`,{ }]}>
+    <ScrollView style={[tw`h-full bg-gray-400 pt-5`,{ }]} refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+  }>
       <TouchableOpacity style={tw`flex-initial `} onPress={() => navigation.openDrawer()} >
                 <Image source={require('../screen/pictures/left.png')}></Image>
             </TouchableOpacity>
